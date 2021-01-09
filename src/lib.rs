@@ -69,7 +69,7 @@ impl<'a, T> MinArrayIterator<'a, T> {
 
     fn recompute_min(&mut self) {
         self.array.min = 0xffffffff;
-        for i in 0..ARRAY_SIZE {
+        for i in 0..self.array.len {
             if let Some((key, _)) = self.array.data[i] {
                 if key < self.array.min {
                     self.array.min = key;
@@ -86,13 +86,11 @@ impl<'a, T> Iterator for MinArrayIterator<'a, T> {
             if let Some((key, _)) = self.array.data[self.index] {
                 if key < self.key {
                     let (_, value) = self.swap_remove().unwrap();
-                    if self.index > 0 {
-                        self.index -= 1;
-                    }
                     return Some((key, value));
+                } else {
+                    self.index += 1;
                 }
             }
-            self.index += 1;
         }
         self.recompute_min();
         None
