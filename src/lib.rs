@@ -1,5 +1,4 @@
 #![no_std]
-#![feature(const_in_array_repeat_expressions)]
 
 //! no_std wrapper around a simple key-value array designed for use in an ISR; the interface is
 //!
@@ -26,7 +25,7 @@ pub struct MinArray<T> {
 impl<T> MinArray<T> {
     pub const fn new() -> MinArray<T> {
         MinArray {
-            data: [None; ARRAY_SIZE],
+            data: [None, None, None, None, None, None, None, None],
             min: 0xffffff,
             len: 0,
         }
